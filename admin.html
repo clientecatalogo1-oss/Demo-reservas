@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel Admin - Demo </title>
+<title>Panel Admin - Demo</title>
 <style>
 *{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#f9fafb;color:#1f2937}.header{background:#1a1a1a;color:#fff;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}.header h1{font-size:1.25rem}.header button{background:#b08d57;color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;cursor:pointer;font-weight:600;font-family:inherit}.contenedor{max-width:1400px;margin:0 auto;padding:1.5rem}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}.stat{background:#fff;padding:1.25rem;border-radius:10px;border:1px solid #e5e7eb}.stat-label{font-size:.8rem;color:#6b7280;text-transform:uppercase;letter-spacing:.5px}.stat-valor{font-size:1.75rem;font-weight:700;margin-top:.25rem}.toolbar{display:flex;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}.toolbar input,.toolbar select{padding:.6rem .85rem;border:1px solid #e5e7eb;border-radius:8px;font-size:.9rem;font-family:inherit}.toolbar input{flex:1;min-width:200px}.btn{padding:.6rem 1.1rem;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;font-family:inherit}.btn-primario{background:#1a1a1a;color:#fff}.btn-sm{padding:.35rem .7rem;font-size:.8rem}.btn-danger{background:#dc2626;color:#fff}.btn-success{background:#16a34a;color:#fff}.btn-outline{background:#fff;color:#1f2937;border:1px solid #e5e7eb}.tabla-wrap{background:#fff;border-radius:10px;border:1px solid #e5e7eb;overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem}th{background:#f9fafb;padding:.85rem;text-align:left;font-weight:600;border-bottom:1px solid #e5e7eb;font-size:.75rem;text-transform:uppercase;color:#6b7280;letter-spacing:.5px}td{padding:.85rem;border-bottom:1px solid #f3f4f6}tr:hover{background:#fafafa}.badge{padding:.2rem .6rem;border-radius:999px;font-size:.7rem;font-weight:600;text-transform:uppercase}.badge-pendiente{background:#fef3c7;color:#92400e}.badge-confirmada{background:#d1fae5;color:#065f46}.badge-cancelada{background:#fee2e2;color:#991b1b}.link{color:#b08d57;text-decoration:none;font-weight:600}.link:hover{text-decoration:underline}.loading{text-align:center;padding:3rem;color:#6b7280}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:1000;padding:1rem}.modal.visible{display:grid}.modal-content{background:#fff;border-radius:12px;padding:1.5rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}.modal-content h2{margin-bottom:1rem}.campo{margin-bottom:1rem}.campo label{display:block;font-size:.85rem;font-weight:600;margin-bottom:.35rem}.campo input,.campo select{width:100%;padding:.7rem;border:1px solid #e5e7eb;border-radius:8px;font-size:.95rem;font-family:inherit}.acciones{display:flex;gap:.5rem;flex-wrap:wrap}@media (max-width:640px){.header{padding:1rem}.contenedor{padding:1rem}th,td{padding:.6rem .5rem;font-size:.75rem}}
 </style>
@@ -21,9 +21,14 @@ if (prompt('Contraseña:') !== CLAVE) {
 <!-- FIN PROTECCIÓN -->
 
 <div class="header">
-<h1>🌸 Panel Admin - Demo </h1>
-<div><button onclick="abrirModalBloqueo()" style="margin-right:.5rem;">🔒 Bloquear horario</button><button onclick="cargarTodo()">🔄 Actualizar</button></div>
+<h1>🌸 Panel Admin - Celant Studio</h1>
+<div>
+  <button onclick="recalcularPestanas()" style="margin-right:.5rem;background:#6b7280;">🔄 Pestañas</button>
+  <button onclick="abrirModalBloqueo()" style="margin-right:.5rem;">🔒 Bloquear horario</button>
+  <button onclick="cargarTodo()">🔄 Actualizar</button>
 </div>
+</div>
+
 <div class="contenedor">
 <div class="stats">
 <div class="stat"><div class="stat-label">Total reservas</div><div class="stat-valor" id="stat-total">-</div></div>
@@ -31,46 +36,224 @@ if (prompt('Contraseña:') !== CLAVE) {
 <div class="stat"><div class="stat-label">Confirmadas</div><div class="stat-valor" id="stat-confirmadas" style="color:#16a34a;">-</div></div>
 <div class="stat"><div class="stat-label">Ingresos estimados</div><div class="stat-valor" id="stat-ingresos" style="color:#b08d57;">-</div></div>
 </div>
-<div class="toolbar"><input type="text" id="buscar" placeholder="🔍 Buscar por nombre, teléfono o servicio..."><select id="filtro-estado"><option value="">Todos los estados</option><option value="Pendiente">Pendientes</option><option value="Confirmada">Confirmadas</option><option value="Cancelada">Canceladas</option></select></div>
+
+<div class="toolbar">
+<input type="text" id="buscar" placeholder="🔍 Buscar por nombre, teléfono o servicio...">
+<select id="filtro-estado">
+<option value="">Todos los estados</option>
+<option value="Pendiente">Pendientes</option>
+<option value="Confirmada">Confirmadas</option>
+<option value="Cancelada">Canceladas</option>
+</select>
+</div>
+
 <div class="tabla-wrap">
 <table>
-<thead><tr><th>Fecha/Hora</th><th>Cliente</th><th>Servicio</th><th>Profesional</th><th>Precio</th><th>Comprobante</th><th>Estado</th><th>Acciones</th></tr></thead>
-<tbody id="cuerpo-tabla"><tr><td colspan="8" class="loading">Cargando...</td></tr></tbody>
+<thead>
+<tr>
+<th>Fecha/Hora</th>
+<th>Cliente</th>
+<th>Servicio</th>
+<th>Profesional</th>
+<th>Precio</th>
+<th>Comprobante</th>
+<th>Estado</th>
+<th>Acciones</th>
+</tr>
+</thead>
+<tbody id="cuerpo-tabla">
+<tr><td colspan="8" class="loading">Cargando...</td></tr>
+</tbody>
 </table>
 </div>
 </div>
+
+<!-- MODAL BLOQUEO -->
 <div class="modal" id="modal-bloqueo">
 <div class="modal-content">
 <h2>🔒 Bloquear horario</h2>
-<div class="campo"><label>Fecha</label><input type="date" id="bloqueo-fecha"></div>
-<div class="campo"><label>Hora</label><select id="bloqueo-hora"><option value="">Seleccionar...</option><option value="09:00">09:00</option><option value="10:00">10:00</option><option value="11:00">11:00</option><option value="12:00">12:00</option><option value="14:00">14:00</option><option value="15:00">15:00</option><option value="16:00">16:00</option><option value="17:00">17:00</option><option value="18:00">18:00</option></select></div>
-<div class="campo"><label>Motivo (opcional)</label><input type="text" id="bloqueo-motivo" placeholder="Ej: Feriado, vacaciones..."></div>
-<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;"><button class="btn btn-outline" onclick="cerrarModalBloqueo()">Cancelar</button><button class="btn btn-primario" onclick="bloquearHorario()">Bloquear</button></div>
+<div class="campo">
+<label>Fecha</label>
+<input type="date" id="bloqueo-fecha">
+</div>
+<div class="campo">
+<label>Hora</label>
+<select id="bloqueo-hora">
+<option value="">Seleccionar...</option>
+<option value="09:00">09:00</option>
+<option value="10:00">10:00</option>
+<option value="11:00">11:00</option>
+<option value="12:00">12:00</option>
+<option value="14:00">14:00</option>
+<option value="15:00">15:00</option>
+<option value="16:00">16:00</option>
+<option value="17:00">17:00</option>
+<option value="18:00">18:00</option>
+</select>
+</div>
+<div class="campo">
+<label>Motivo (opcional)</label>
+<input type="text" id="bloqueo-motivo" placeholder="Ej: Feriado, vacaciones...">
+</div>
+<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+<button class="btn btn-outline" onclick="cerrarModalBloqueo()">Cancelar</button>
+<button class="btn btn-primario" onclick="bloquearHorario()">Bloquear</button>
 </div>
 </div>
+</div>
+
 <script>
 // ⚠️ REEMPLAZÁ ESTA URL CON LA TUYA DEL APPS SCRIPT (la misma que en index.html)
 const API_URL = 'https://script.google.com/macros/s/AKfycbxIY7rMDU4hHHLSE94UoXRdrt4A7M8EjS-tJl3B5Gan2WEUXdh-NB65RQnk3TVpAJAbnw/exec';
-let reservas=[];
-let bloqueos=[];
 
-async function cargarTodo(){document.getElementById('cuerpo-tabla').innerHTML='<tr><td colspan="8" class="loading">Cargando...</td></tr>';try{const[rr,br]=await Promise.all([fetch(API_URL+'?accion=getReservas',{redirect:'follow'}).then(r=>r.json()),fetch(API_URL+'?accion=getBloqueos',{redirect:'follow'}).then(r=>r.json())]);reservas=rr.reservas||[];bloqueos=br.bloqueos||[];renderStats();renderTabla();}catch(e){document.getElementById('cuerpo-tabla').innerHTML=`<tr><td colspan="8" class="loading" style="color:#dc2626;">Error: ${e.message}</td></tr>`;}}
+let reservas = [];
+let bloqueos = [];
 
-function renderStats(){const t=reservas.length;const p=reservas.filter(r=>r.Estado==='Pendiente').length;const c=reservas.filter(r=>r.Estado==='Confirmada').length;const i=reservas.filter(r=>r.Estado!=='Cancelada').reduce((s,r)=>s+(Number(r.Precio)||0),0);document.getElementById('stat-total').textContent=t;document.getElementById('stat-pendientes').textContent=p;document.getElementById('stat-confirmadas').textContent=c;document.getElementById('stat-ingresos').textContent='$'+i.toLocaleString('es-AR');}
+async function cargarTodo(){
+  document.getElementById('cuerpo-tabla').innerHTML = '<tr><td colspan="8" class="loading">Cargando...</td></tr>';
+  try {
+    const [rr, br] = await Promise.all([
+      fetch(API_URL + '?accion=getReservas', { redirect: 'follow' }).then(r => r.json()),
+      fetch(API_URL + '?accion=getBloqueos', { redirect: 'follow' }).then(r => r.json())
+    ]);
+    reservas = rr.reservas || [];
+    bloqueos = br.bloqueos || [];
+    renderStats();
+    renderTabla();
+  } catch (e) {
+    document.getElementById('cuerpo-tabla').innerHTML = `<tr><td colspan="8" class="loading" style="color:#dc2626;">Error: ${e.message}</td></tr>`;
+  }
+}
 
-function formatearFecha(f){if(!f)return '-';const d=new Date(f);if(isNaN(d))return String(f);return d.toLocaleDateString('es-AR');}
+function renderStats(){
+  const t = reservas.length;
+  const p = reservas.filter(r => (r.Estado || 'Pendiente') === 'Pendiente').length;
+  const c = reservas.filter(r => r.Estado === 'Confirmada').length;
+  const i = reservas.filter(r => r.Estado !== 'Cancelada').reduce((s, r) => s + (Number(r.Precio) || 0), 0);
+  document.getElementById('stat-total').textContent = t;
+  document.getElementById('stat-pendientes').textContent = p;
+  document.getElementById('stat-confirmadas').textContent = c;
+  document.getElementById('stat-ingresos').textContent = '$' + i.toLocaleString('es-AR');
+}
 
-function renderTabla(){const b=document.getElementById('buscar').value.toLowerCase();const fe=document.getElementById('filtro-estado').value;let fl=reservas.filter(r=>{const cb=!b||String(r.Nombre||'').toLowerCase().includes(b)||String(r.Telefono||'').includes(b)||String(r.Servicio||'').toLowerCase().includes(b);const ce=!fe||r.Estado===fe;return cb&&ce;});fl.sort((a,b)=>new Date(b.Timestamp)-new Date(a.Timestamp));const tb=document.getElementById('cuerpo-tabla');if(!fl.length){tb.innerHTML='<tr><td colspan="8" class="loading">No hay reservas</td></tr>';return;}tb.innerHTML=fl.map(r=>{const bc=r.Estado==='Confirmada'?'badge-confirmada':r.Estado==='Cancelada'?'badge-cancelada':'badge-pendiente';const comp=r.Comprobante?`<a href="${r.Comprobante}" target="_blank" class="link">Ver</a>`:'<span style="color:#9ca3af;">—</span>';const acc=r.Estado!=='Cancelada'?`${r.Estado==='Pendiente'?`<button class="btn btn-sm btn-success" onclick="marcarConfirmada('${r.ID}')">✓</button>`:''}<button class="btn btn-sm btn-danger" onclick="cancelarReserva('${r.ID}')">✗</button>`:'';return `<tr><td><strong>${formatearFecha(r.Fecha)}</strong><br><span style="color:#6b7280;">${r.Hora||''}</span></td><td><strong>${r.Nombre||''}</strong><br><a href="https://wa.me/${String(r.Telefono||'').replace(/\D/g,'')}" target="_blank" class="link">${r.Telefono||''}</a></td><td>${r.Servicio||''}</td><td>${r.Profesional||''}</td><td><strong>$${Number(r.Precio||0).toLocaleString('es-AR')}</strong></td><td>${comp}</td><td><span class="badge ${bc}">${r.Estado}</span></td><td><div class="acciones">${acc}</div></td></tr>`;}).join('');}
+function formatearFecha(f){
+  if (!f) return '-';
+  const d = new Date(f);
+  if (isNaN(d)) return String(f);
+  return d.toLocaleDateString('es-AR');
+}
 
-document.getElementById('buscar').addEventListener('input',renderTabla);
-document.getElementById('filtro-estado').addEventListener('change',renderTabla);
+function renderTabla(){
+  const b = document.getElementById('buscar').value.toLowerCase();
+  const fe = document.getElementById('filtro-estado').value;
+  let fl = reservas.filter(r => {
+    const cb = !b ||
+      String(r.Nombre || '').toLowerCase().includes(b) ||
+      String(r.Telefono || '').includes(b) ||
+      String(r.Servicio || '').toLowerCase().includes(b);
+    const ce = !fe || (r.Estado || 'Pendiente') === fe;
+    return cb && ce;
+  });
+  fl.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
+  const tb = document.getElementById('cuerpo-tabla');
+  if (!fl.length) {
+    tb.innerHTML = '<tr><td colspan="8" class="loading">No hay reservas</td></tr>';
+    return;
+  }
+  tb.innerHTML = fl.map(r => {
+    // Estado por defecto si viene vacío (reservas manuales)
+    const estadoMostrar = r.Estado || 'Pendiente';
+    const bc = estadoMostrar === 'Confirmada' ? 'badge-confirmada'
+      : estadoMostrar === 'Cancelada' ? 'badge-cancelada'
+      : 'badge-pendiente';
+    const comp = r.Comprobante
+      ? `<a href="${r.Comprobante}" target="_blank" class="link">Ver</a>`
+      : '<span style="color:#9ca3af;">—</span>';
+    // Detectar si es manual: los IDs automáticos empiezan con "R", los manuales no
+    const esManual = !String(r.ID || '').startsWith('R');
+    const acc = estadoMostrar !== 'Cancelada' ? `
+      ${estadoMostrar === 'Pendiente' ? `<button class="btn btn-sm btn-success" onclick="marcarConfirmada('${r.ID}')">✓</button>` : ''}
+      <button class="btn btn-sm btn-danger" onclick="cancelarReserva('${r.ID}')">✗</button>
+    ` : '';
+    return `<tr style="${esManual ? 'background:#fef9f3;' : ''}">
+      <td><strong>${formatearFecha(r.Fecha)}</strong><br><span style="color:#6b7280;">${r.Hora || ''}</span></td>
+      <td><strong>${r.Nombre || ''}</strong><br><a href="https://wa.me/${String(r.Telefono || '').replace(/\D/g, '')}" target="_blank" class="link">${r.Telefono || ''}</a></td>
+      <td>${r.Servicio || ''}</td>
+      <td>${r.Profesional || ''}</td>
+      <td><strong>$${Number(r.Precio || 0).toLocaleString('es-AR')}</strong></td>
+      <td>${comp}</td>
+      <td><span class="badge ${bc}">${estadoMostrar}</span></td>
+      <td><div class="acciones">${acc}</div></td>
+    </tr>`;
+  }).join('');
+}
 
-async function marcarConfirmada(id){if(!confirm('¿Marcar como confirmada?'))return;await fetch(API_URL,{method:'POST',body:JSON.stringify({accion:'marcarConfirmada',id}),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});cargarTodo();}
-async function cancelarReserva(id){if(!confirm('¿Cancelar esta reserva? El horario quedará liberado.'))return;await fetch(API_URL,{method:'POST',body:JSON.stringify({accion:'eliminarReserva',id}),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});cargarTodo();}
+document.getElementById('buscar').addEventListener('input', renderTabla);
+document.getElementById('filtro-estado').addEventListener('change', renderTabla);
 
-function abrirModalBloqueo(){document.getElementById('modal-bloqueo').classList.add('visible');}
-function cerrarModalBloqueo(){document.getElementById('modal-bloqueo').classList.remove('visible');}
-async function bloquearHorario(){const f=document.getElementById('bloqueo-fecha').value;const h=document.getElementById('bloqueo-hora').value;const m=document.getElementById('bloqueo-motivo').value;if(!f||!h){alert('Completá fecha y hora');return;}await fetch(API_URL,{method:'POST',body:JSON.stringify({accion:'bloquearHorario',fecha:f,hora:h,motivo:m}),headers:{'Content-Type':'text/plain;charset=utf-8'},redirect:'follow'});cerrarModalBloqueo();document.getElementById('bloqueo-fecha').value='';document.getElementById('bloqueo-hora').value='';document.getElementById('bloqueo-motivo').value='';cargarTodo();}
+async function marcarConfirmada(id){
+  if (!confirm('¿Marcar como confirmada?')) return;
+  await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ accion: 'marcarConfirmada', id }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    redirect: 'follow'
+  });
+  cargarTodo();
+}
+
+async function cancelarReserva(id){
+  if (!confirm('¿Cancelar esta reserva? El horario quedará liberado.')) return;
+  await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ accion: 'eliminarReserva', id }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    redirect: 'follow'
+  });
+  cargarTodo();
+}
+
+async function recalcularPestanas(){
+  if (!confirm('¿Recalcular las pestañas por profesional? Esto puede tardar unos segundos.')) return;
+  try {
+    const r = await fetch(API_URL, {
+      method: 'POST',
+      body: JSON.stringify({ accion: 'recalcularPestanas' }),
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      redirect: 'follow'
+    });
+    const data = await r.json();
+    if (data.ok) {
+      alert('✅ Pestañas recalculadas:\n\n' + (data.actualizadas || []).join('\n'));
+      cargarTodo();
+    } else {
+      alert('⚠️ ' + (data.error || 'No se pudieron recalcular'));
+    }
+  } catch (e) {
+    alert('Error: ' + e.message);
+  }
+}
+
+function abrirModalBloqueo(){ document.getElementById('modal-bloqueo').classList.add('visible'); }
+function cerrarModalBloqueo(){ document.getElementById('modal-bloqueo').classList.remove('visible'); }
+
+async function bloquearHorario(){
+  const f = document.getElementById('bloqueo-fecha').value;
+  const h = document.getElementById('bloqueo-hora').value;
+  const m = document.getElementById('bloqueo-motivo').value;
+  if (!f || !h) { alert('Completá fecha y hora'); return; }
+  await fetch(API_URL, {
+    method: 'POST',
+    body: JSON.stringify({ accion: 'bloquearHorario', fecha: f, hora: h, motivo: m }),
+    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+    redirect: 'follow'
+  });
+  cerrarModalBloqueo();
+  document.getElementById('bloqueo-fecha').value = '';
+  document.getElementById('bloqueo-hora').value = '';
+  document.getElementById('bloqueo-motivo').value = '';
+  cargarTodo();
+}
 
 cargarTodo();
 </script>
