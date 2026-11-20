@@ -3,9 +3,202 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Panel Admin - Demo</title>
+<title>Panel Admin - Vidriera Digital</title>
 <style>
-*{margin:0;padding:0;box-sizing:border-box}body{font-family:'Segoe UI',sans-serif;background:#f9fafb;color:#1f2937}.header{background:#1a1a1a;color:#fff;padding:1.25rem 2rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem}.header h1{font-size:1.25rem}.header button{background:#b08d57;color:#fff;border:none;padding:.5rem 1rem;border-radius:6px;cursor:pointer;font-weight:600;font-family:inherit}.contenedor{max-width:1400px;margin:0 auto;padding:1.5rem}.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}.stat{background:#fff;padding:1.25rem;border-radius:10px;border:1px solid #e5e7eb}.stat-label{font-size:.8rem;color:#6b7280;text-transform:uppercase;letter-spacing:.5px}.stat-valor{font-size:1.75rem;font-weight:700;margin-top:.25rem}.toolbar{display:flex;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center}.toolbar input,.toolbar select{padding:.6rem .85rem;border:1px solid #e5e7eb;border-radius:8px;font-size:.9rem;font-family:inherit}.toolbar input{flex:1;min-width:200px}.btn{padding:.6rem 1.1rem;border:none;border-radius:8px;font-weight:600;cursor:pointer;font-size:.9rem;font-family:inherit}.btn-primario{background:#1a1a1a;color:#fff}.btn-sm{padding:.35rem .7rem;font-size:.8rem}.btn-danger{background:#dc2626;color:#fff}.btn-success{background:#16a34a;color:#fff}.btn-outline{background:#fff;color:#1f2937;border:1px solid #e5e7eb}.tabla-wrap{background:#fff;border-radius:10px;border:1px solid #e5e7eb;overflow-x:auto}table{width:100%;border-collapse:collapse;font-size:.85rem}th{background:#f9fafb;padding:.85rem;text-align:left;font-weight:600;border-bottom:1px solid #e5e7eb;font-size:.75rem;text-transform:uppercase;color:#6b7280;letter-spacing:.5px}td{padding:.85rem;border-bottom:1px solid #f3f4f6}tr:hover{background:#fafafa}.badge{padding:.2rem .6rem;border-radius:999px;font-size:.7rem;font-weight:600;text-transform:uppercase}.badge-pendiente{background:#fef3c7;color:#92400e}.badge-confirmada{background:#d1fae5;color:#065f46}.badge-cancelada{background:#fee2e2;color:#991b1b}.link{color:#b08d57;text-decoration:none;font-weight:600}.link:hover{text-decoration:underline}.loading{text-align:center;padding:3rem;color:#6b7280}.modal{position:fixed;inset:0;background:rgba(0,0,0,.5);display:none;place-items:center;z-index:1000;padding:1rem}.modal.visible{display:grid}.modal-content{background:#fff;border-radius:12px;padding:1.5rem;max-width:500px;width:100%;max-height:90vh;overflow-y:auto}.modal-content h2{margin-bottom:1rem}.campo{margin-bottom:1rem}.campo label{display:block;font-size:.85rem;font-weight:600;margin-bottom:.35rem}.campo input,.campo select{width:100%;padding:.7rem;border:1px solid #e5e7eb;border-radius:8px;font-size:.95rem;font-family:inherit}.acciones{display:flex;gap:.5rem;flex-wrap:wrap}@media (max-width:640px){.header{padding:1rem}.contenedor{padding:1rem}th,td{padding:.6rem .5rem;font-size:.75rem}}
+    *{margin:0;padding:0;box-sizing:border-box}
+
+    /* ============================================================
+       PALETA 60-30-10 — OPCIÓN 1: ENFOQUE CLARO (misma que catálogo)
+       60% Lienzo: #F7F9FB
+       30% Estructural: #0B1A2E
+       10% Conversión: #00A651
+       ============================================================ */
+    :root {
+        --bg-dominante-60: #F7F9FB;
+        --surface-estructural-30: #0B1A2E;
+        --surface-estructural-30-suave: #1E2E45;
+        --text-principal: #0B1A2E;
+        --text-secundario: #6B7280;
+        --border-sutil: #E2E8F0;
+        --cta-acento-10: #00A651;
+        --cta-acento-10-hover: #008F44;
+        --cta-texto: #FFFFFF;
+        --exito: #16A34A;
+        --error: #DC2626;
+        --advertencia: #D97706;
+    }
+
+    body{
+        font-family:'Segoe UI',-apple-system,sans-serif;
+        background:var(--bg-dominante-60);
+        color:var(--text-principal);
+        line-height:1.5;
+        padding-bottom:2rem;
+    }
+
+    /* Header con logo y chip claro */
+    .header{
+        background:var(--surface-estructural-30);
+        color:#fff;
+        padding:1rem 2rem;
+        display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1rem;
+    }
+    .header-brand{
+        display:flex;align-items:center;gap:14px;
+    }
+    .logo-chip{
+        background:var(--bg-dominante-60);
+        border-radius:12px;
+        padding:6px 10px;
+        display:inline-flex;align-items:center;justify-content:center;
+        box-shadow:0 4px 14px rgba(0,0,0,.18), inset 0 0 0 1px rgba(11,26,46,.06);
+        transition:transform .2s;
+    }
+    .logo-chip:hover{transform:scale(1.03)}
+    .logo-chip img{height:44px;width:auto;display:block;border-radius:6px}
+    .header h1{font-size:1.1rem;font-weight:600;letter-spacing:.5px}
+    .header h1 span{font-size:.75rem;display:block;font-weight:400;opacity:.8;letter-spacing:0;text-transform:none;margin-top:2px}
+
+    .header-actions{display:flex;gap:.5rem;flex-wrap:wrap}
+    .header-actions button{
+        background:rgba(255,255,255,.1);
+        color:#fff;border:1px solid rgba(255,255,255,.15);
+        padding:.5rem 1rem;border-radius:8px;cursor:pointer;
+        font-weight:600;font-family:inherit;font-size:.85rem;
+        transition:all .2s;
+    }
+    .header-actions button:hover{background:rgba(255,255,255,.2)}
+    .header-actions button.destacado{background:var(--cta-acento-10);border-color:var(--cta-acento-10)}
+    .header-actions button.destacado:hover{background:var(--cta-acento-10-hover)}
+
+    .contenedor{max-width:1400px;margin:0 auto;padding:1.5rem}
+
+    /* Stats */
+    .stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;margin-bottom:1.5rem}
+    .stat{
+        background:var(--blanco);padding:1.25rem;border-radius:14px;
+        border:1px solid var(--border-sutil);
+        box-shadow:0 2px 8px rgba(11,26,46,.03);
+    }
+    .stat-label{font-size:.75rem;color:var(--text-secundario);text-transform:uppercase;letter-spacing:.5px;font-weight:600}
+    .stat-valor{font-size:1.75rem;font-weight:700;margin-top:.25rem;color:var(--surface-estructural-30)}
+    .stat-valor.verde{color:var(--cta-acento-10)}
+    .stat-valor.advertencia{color:var(--advertencia)}
+
+    /* Toolbar */
+    .toolbar{
+        display:flex;gap:.75rem;margin-bottom:1rem;flex-wrap:wrap;align-items:center;
+        background:var(--blanco);padding:.75rem;border-radius:12px;
+        border:1px solid var(--border-sutil);
+    }
+    .toolbar input,.toolbar select{
+        padding:.6rem .85rem;border:1px solid var(--border-sutil);
+        border-radius:8px;font-size:.9rem;font-family:inherit;
+        background:var(--bg-dominante-60);color:var(--text-principal);
+    }
+    .toolbar input{flex:1;min-width:200px}
+    .toolbar input:focus,.toolbar select:focus{outline:2px solid var(--cta-acento-10);border-color:transparent}
+
+    /* Botones */
+    .btn{
+        padding:.6rem 1.1rem;border:none;border-radius:8px;
+        font-weight:600;cursor:pointer;font-size:.85rem;font-family:inherit;
+        transition:all .15s;display:inline-flex;align-items:center;gap:.35rem;
+    }
+    .btn-primario{background:var(--cta-acento-10);color:#fff;box-shadow:0 2px 8px rgba(0,166,81,.2)}
+    .btn-primario:hover{background:var(--cta-acento-10-hover);transform:translateY(-1px)}
+    .btn-sm{padding:.4rem .7rem;font-size:.8rem}
+    .btn-danger{background:#FEE2E2;color:var(--error);border:1px solid #FECACA}
+    .btn-danger:hover{background:var(--error);color:#fff}
+    .btn-success{background:#D1FAE5;color:#065F46;border:1px solid #A7F3D0}
+    .btn-success:hover{background:var(--cta-acento-10);color:#fff}
+    .btn-outline{background:var(--blanco);color:var(--surface-estructural-30);border:1px solid var(--border-sutil)}
+    .btn-outline:hover{background:var(--bg-dominante-60);border-color:var(--surface-estructural-30)}
+    .btn-repro{background:#E0E7FF;color:#3730A3;border:1px solid #C7D2FE}
+    .btn-repro:hover{background:#3730A3;color:#fff}
+
+    /* Tabla */
+    .tabla-wrap{
+        background:var(--blanco);border-radius:14px;
+        border:1px solid var(--border-sutil);overflow-x:auto;
+        box-shadow:0 2px 8px rgba(11,26,46,.03);
+    }
+    table{width:100%;border-collapse:collapse;font-size:.85rem}
+    th{
+        background:var(--bg-dominante-60);padding:.85rem;text-align:left;
+        font-weight:600;border-bottom:1px solid var(--border-sutil);
+        font-size:.7rem;text-transform:uppercase;color:var(--text-secundario);
+        letter-spacing:.5px;white-space:nowrap;
+    }
+    td{padding:.85rem;border-bottom:1px solid #F1F5F9;vertical-align:middle}
+    tr:hover{background:#FAFBFC}
+    tr:last-child td{border-bottom:none}
+
+    /* Badges de estado */
+    .badge{
+        padding:.25rem .65rem;border-radius:999px;
+        font-size:.7rem;font-weight:600;text-transform:uppercase;
+        display:inline-block;white-space:nowrap;
+    }
+    .badge-pendiente{background:#FEF3C7;color:#92400E}
+    .badge-confirmada{background:#D1FAE5;color:#065F46}
+    .badge-cancelada{background:#FEE2E2;color:#991B1B}
+
+    .link{color:var(--cta-acento-10);text-decoration:none;font-weight:600}
+    .link:hover{text-decoration:underline}
+    .loading{text-align:center;padding:3rem;color:var(--text-secundario)}
+
+    /* Acciones de fila */
+    .acciones{display:flex;gap:.4rem;flex-wrap:wrap}
+
+    /* Modales */
+    .modal{
+        position:fixed;inset:0;background:rgba(11,26,46,.55);
+        display:none;place-items:center;z-index:1000;padding:1rem;
+        backdrop-filter:blur(2px);
+    }
+    .modal.visible{display:grid}
+    .modal-content{
+        background:var(--blanco);border-radius:16px;padding:1.75rem;
+        max-width:500px;width:100%;max-height:90vh;overflow-y:auto;
+        box-shadow:0 20px 60px rgba(11,26,46,.25);
+        animation:modalIn .25s ease;
+    }
+    @keyframes modalIn{from{opacity:0;transform:scale(.95)}to{opacity:1;transform:scale(1)}}
+    .modal-content h2{
+        margin-bottom:1.25rem;font-size:1.2rem;
+        color:var(--surface-estructural-30);
+        display:flex;align-items:center;gap:.5rem;
+    }
+    .campo{margin-bottom:1rem}
+    .campo label{
+        display:block;font-size:.85rem;font-weight:600;
+        margin-bottom:.35rem;color:var(--surface-estructural-30);
+    }
+    .campo input,.campo select{
+        width:100%;padding:.7rem;border:1px solid var(--border-sutil);
+        border-radius:8px;font-size:.95rem;font-family:inherit;
+        background:var(--blanco);color:var(--text-principal);
+    }
+    .campo input:focus,.campo select:focus{
+        outline:2px solid var(--cta-acento-10);border-color:transparent;
+        box-shadow:0 0 0 4px rgba(0,166,81,.12);
+    }
+    .campo .hint{font-size:.75rem;color:var(--text-secundario);margin-top:.35rem}
+
+    /* Responsive */
+    @media (max-width:640px){
+        .header{padding:1rem;flex-direction:column;align-items:stretch}
+        .header-brand{justify-content:center}
+        .logo-chip img{height:36px}
+        .header h1{text-align:center;font-size:1rem}
+        .header-actions{justify-content:center}
+        .header-actions button{font-size:.8rem;padding:.45rem .8rem}
+        .contenedor{padding:1rem}
+        th,td{padding:.6rem .5rem;font-size:.75rem}
+        .acciones{gap:.3rem}
+        .btn-sm{font-size:.7rem;padding:.3rem .5rem}
+    }
 </style>
 </head>
 <body>
@@ -21,85 +214,122 @@ if (prompt('Contraseña:') !== CLAVE) {
 <!-- FIN PROTECCIÓN -->
 
 <div class="header">
-<h1>🌸 Panel Admin - Celant Studio</h1>
-<div>
-  <button onclick="recalcularPestanas()" style="margin-right:.5rem;background:#6b7280;">🔄 Pestañas</button>
-  <button onclick="abrirModalBloqueo()" style="margin-right:.5rem;">🔒 Bloquear horario</button>
-  <button onclick="cargarTodo()">🔄 Actualizar</button>
-</div>
+    <div class="header-brand">
+        <span class="logo-chip">
+            <img src="https://i.ibb.co/Tx9m0P7Z/logo.jpg" alt="Vidriera Digital">
+        </span>
+        <h1>Panel Admin<span>Reservas online - By @vidriera_digital.ar</span></h1>
+    </div>
+    <div class="header-actions">
+        <button onclick="recalcularPestanas()">🔄 Pestañas</button>
+        <button onclick="abrirModalBloqueo()">🔒 Bloquear horario</button>
+        <button onclick="cargarTodo()" class="destacado">🔄 Actualizar</button>
+    </div>
 </div>
 
 <div class="contenedor">
-<div class="stats">
-<div class="stat"><div class="stat-label">Total reservas</div><div class="stat-valor" id="stat-total">-</div></div>
-<div class="stat"><div class="stat-label">Pendientes</div><div class="stat-valor" id="stat-pendientes" style="color:#d97706;">-</div></div>
-<div class="stat"><div class="stat-label">Confirmadas</div><div class="stat-valor" id="stat-confirmadas" style="color:#16a34a;">-</div></div>
-<div class="stat"><div class="stat-label">Ingresos estimados</div><div class="stat-valor" id="stat-ingresos" style="color:#b08d57;">-</div></div>
-</div>
+    <div class="stats">
+        <div class="stat"><div class="stat-label">Total reservas</div><div class="stat-valor" id="stat-total">-</div></div>
+        <div class="stat"><div class="stat-label">Pendientes</div><div class="stat-valor advertencia" id="stat-pendientes">-</div></div>
+        <div class="stat"><div class="stat-label">Confirmadas</div><div class="stat-valor verde" id="stat-confirmadas">-</div></div>
+        <div class="stat"><div class="stat-label">Ingresos estimados</div><div class="stat-valor" id="stat-ingresos" style="color:var(--cta-acento-10);">-</div></div>
+    </div>
 
-<div class="toolbar">
-<input type="text" id="buscar" placeholder="🔍 Buscar por nombre, teléfono o servicio...">
-<select id="filtro-estado">
-<option value="">Todos los estados</option>
-<option value="Pendiente">Pendientes</option>
-<option value="Confirmada">Confirmadas</option>
-<option value="Cancelada">Canceladas</option>
-</select>
-</div>
+    <div class="toolbar">
+        <input type="text" id="buscar" placeholder="🔍 Buscar por nombre, teléfono o servicio...">
+        <select id="filtro-estado">
+            <option value="">Todos los estados</option>
+            <option value="Pendiente">Pendientes</option>
+            <option value="Confirmada">Confirmadas</option>
+            <option value="Cancelada">Canceladas</option>
+        </select>
+    </div>
 
-<div class="tabla-wrap">
-<table>
-<thead>
-<tr>
-<th>Fecha/Hora</th>
-<th>Cliente</th>
-<th>Servicio</th>
-<th>Profesional</th>
-<th>Precio</th>
-<th>Comprobante</th>
-<th>Estado</th>
-<th>Acciones</th>
-</tr>
-</thead>
-<tbody id="cuerpo-tabla">
-<tr><td colspan="8" class="loading">Cargando...</td></tr>
-</tbody>
-</table>
-</div>
+    <div class="tabla-wrap">
+        <table>
+            <thead>
+                <tr>
+                    <th>Fecha/Hora</th>
+                    <th>Cliente</th>
+                    <th>Servicio</th>
+                    <th>Profesional</th>
+                    <th>Precio</th>
+                    <th>Comprobante</th>
+                    <th>Estado</th>
+                    <th>Acciones</th>
+                </tr>
+            </thead>
+            <tbody id="cuerpo-tabla">
+                <tr><td colspan="8" class="loading">Cargando...</td></tr>
+            </tbody>
+        </table>
+    </div>
 </div>
 
 <!-- MODAL BLOQUEO -->
 <div class="modal" id="modal-bloqueo">
-<div class="modal-content">
-<h2>🔒 Bloquear horario</h2>
-<div class="campo">
-<label>Fecha</label>
-<input type="date" id="bloqueo-fecha">
+    <div class="modal-content">
+        <h2>🔒 Bloquear horario</h2>
+        <div class="campo">
+            <label>Fecha</label>
+            <input type="date" id="bloqueo-fecha">
+        </div>
+        <div class="campo">
+            <label>Hora</label>
+            <select id="bloqueo-hora">
+                <option value="">Seleccionar...</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+            </select>
+        </div>
+        <div class="campo">
+            <label>Motivo (opcional)</label>
+            <input type="text" id="bloqueo-motivo" placeholder="Ej: Feriado, vacaciones...">
+        </div>
+        <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+            <button class="btn btn-outline" onclick="cerrarModalBloqueo()">Cancelar</button>
+            <button class="btn btn-primario" onclick="bloquearHorario()">Bloquear</button>
+        </div>
+    </div>
 </div>
-<div class="campo">
-<label>Hora</label>
-<select id="bloqueo-hora">
-<option value="">Seleccionar...</option>
-<option value="09:00">09:00</option>
-<option value="10:00">10:00</option>
-<option value="11:00">11:00</option>
-<option value="12:00">12:00</option>
-<option value="14:00">14:00</option>
-<option value="15:00">15:00</option>
-<option value="16:00">16:00</option>
-<option value="17:00">17:00</option>
-<option value="18:00">18:00</option>
-</select>
-</div>
-<div class="campo">
-<label>Motivo (opcional)</label>
-<input type="text" id="bloqueo-motivo" placeholder="Ej: Feriado, vacaciones...">
-</div>
-<div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
-<button class="btn btn-outline" onclick="cerrarModalBloqueo()">Cancelar</button>
-<button class="btn btn-primario" onclick="bloquearHorario()">Bloquear</button>
-</div>
-</div>
+
+<!-- MODAL REPROGRAMAR -->
+<div class="modal" id="modal-repro">
+    <div class="modal-content">
+        <h2>📅 Reprogramar turno</h2>
+        <div id="repro-info" style="background:var(--bg-dominante-60);border:1px solid var(--border-sutil);border-radius:10px;padding:.85rem;margin-bottom:1rem;font-size:.85rem;"></div>
+        <div class="campo">
+            <label>Nueva fecha</label>
+            <input type="date" id="repro-fecha">
+        </div>
+        <div class="campo">
+            <label>Nueva hora</label>
+            <select id="repro-hora">
+                <option value="">Seleccionar...</option>
+                <option value="09:00">09:00</option>
+                <option value="10:00">10:00</option>
+                <option value="11:00">11:00</option>
+                <option value="12:00">12:00</option>
+                <option value="14:00">14:00</option>
+                <option value="15:00">15:00</option>
+                <option value="16:00">16:00</option>
+                <option value="17:00">17:00</option>
+                <option value="18:00">18:00</option>
+            </select>
+            <div class="hint">El horario anterior quedará liberado automáticamente.</div>
+        </div>
+        <div style="display:flex;gap:.5rem;justify-content:flex-end;margin-top:1rem;">
+            <button class="btn btn-outline" onclick="cerrarModalRepro()">Cancelar</button>
+            <button class="btn btn-primario" onclick="guardarReprogramacion()">Guardar cambio</button>
+        </div>
+    </div>
 </div>
 
 <script>
@@ -108,151 +338,202 @@ const API_URL = 'https://script.google.com/macros/s/AKfycbxIY7rMDU4hHHLSE94UoXRd
 
 let reservas = [];
 let bloqueos = [];
+let reservaReprogramando = null; // ID de la reserva que se está reprogramando
 
 async function cargarTodo(){
-  document.getElementById('cuerpo-tabla').innerHTML = '<tr><td colspan="8" class="loading">Cargando...</td></tr>';
-  try {
-    const [rr, br] = await Promise.all([
-      fetch(API_URL + '?accion=getReservas', { redirect: 'follow' }).then(r => r.json()),
-      fetch(API_URL + '?accion=getBloqueos', { redirect: 'follow' }).then(r => r.json())
-    ]);
-    reservas = rr.reservas || [];
-    bloqueos = br.bloqueos || [];
-    renderStats();
-    renderTabla();
-  } catch (e) {
-    document.getElementById('cuerpo-tabla').innerHTML = `<tr><td colspan="8" class="loading" style="color:#dc2626;">Error: ${e.message}</td></tr>`;
-  }
+    document.getElementById('cuerpo-tabla').innerHTML = '<tr><td colspan="8" class="loading">Cargando...</td></tr>';
+    try {
+        const [rr, br] = await Promise.all([
+            fetch(API_URL + '?accion=getReservas', { redirect: 'follow' }).then(r => r.json()),
+            fetch(API_URL + '?accion=getBloqueos', { redirect: 'follow' }).then(r => r.json())
+        ]);
+        reservas = rr.reservas || [];
+        bloqueos = br.bloqueos || [];
+        renderStats();
+        renderTabla();
+    } catch (e) {
+        document.getElementById('cuerpo-tabla').innerHTML = `<tr><td colspan="8" class="loading" style="color:var(--error);">Error: ${e.message}</td></tr>`;
+    }
 }
 
 function renderStats(){
-  const t = reservas.length;
-  const p = reservas.filter(r => (r.Estado || 'Pendiente') === 'Pendiente').length;
-  const c = reservas.filter(r => r.Estado === 'Confirmada').length;
-  const i = reservas.filter(r => r.Estado !== 'Cancelada').reduce((s, r) => s + (Number(r.Precio) || 0), 0);
-  document.getElementById('stat-total').textContent = t;
-  document.getElementById('stat-pendientes').textContent = p;
-  document.getElementById('stat-confirmadas').textContent = c;
-  document.getElementById('stat-ingresos').textContent = '$' + i.toLocaleString('es-AR');
+    const t = reservas.length;
+    const p = reservas.filter(r => (r.Estado || 'Pendiente') === 'Pendiente').length;
+    const c = reservas.filter(r => r.Estado === 'Confirmada').length;
+    const i = reservas.filter(r => r.Estado !== 'Cancelada').reduce((s, r) => s + (Number(r.Precio) || 0), 0);
+    document.getElementById('stat-total').textContent = t;
+    document.getElementById('stat-pendientes').textContent = p;
+    document.getElementById('stat-confirmadas').textContent = c;
+    document.getElementById('stat-ingresos').textContent = '$' + i.toLocaleString('es-AR');
 }
 
 function formatearFecha(f){
-  if (!f) return '-';
-  const d = new Date(f);
-  if (isNaN(d)) return String(f);
-  return d.toLocaleDateString('es-AR');
+    if (!f) return '-';
+    const d = new Date(f);
+    if (isNaN(d)) return String(f);
+    return d.toLocaleDateString('es-AR');
 }
 
 function renderTabla(){
-  const b = document.getElementById('buscar').value.toLowerCase();
-  const fe = document.getElementById('filtro-estado').value;
-  let fl = reservas.filter(r => {
-    const cb = !b ||
-      String(r.Nombre || '').toLowerCase().includes(b) ||
-      String(r.Telefono || '').includes(b) ||
-      String(r.Servicio || '').toLowerCase().includes(b);
-    const ce = !fe || (r.Estado || 'Pendiente') === fe;
-    return cb && ce;
-  });
-  fl.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
-  const tb = document.getElementById('cuerpo-tabla');
-  if (!fl.length) {
-    tb.innerHTML = '<tr><td colspan="8" class="loading">No hay reservas</td></tr>';
-    return;
-  }
-  tb.innerHTML = fl.map(r => {
-    // Estado por defecto si viene vacío (reservas manuales)
-    const estadoMostrar = r.Estado || 'Pendiente';
-    const bc = estadoMostrar === 'Confirmada' ? 'badge-confirmada'
-      : estadoMostrar === 'Cancelada' ? 'badge-cancelada'
-      : 'badge-pendiente';
-    const comp = r.Comprobante
-      ? `<a href="${r.Comprobante}" target="_blank" class="link">Ver</a>`
-      : '<span style="color:#9ca3af;">—</span>';
-    // Detectar si es manual: los IDs automáticos empiezan con "R", los manuales no
-    const esManual = !String(r.ID || '').startsWith('R');
-    const acc = estadoMostrar !== 'Cancelada' ? `
-      ${estadoMostrar === 'Pendiente' ? `<button class="btn btn-sm btn-success" onclick="marcarConfirmada('${r.ID}')">✓</button>` : ''}
-      <button class="btn btn-sm btn-danger" onclick="cancelarReserva('${r.ID}')">✗</button>
-    ` : '';
-    return `<tr style="${esManual ? 'background:#fef9f3;' : ''}">
-      <td><strong>${formatearFecha(r.Fecha)}</strong><br><span style="color:#6b7280;">${r.Hora || ''}</span></td>
-      <td><strong>${r.Nombre || ''}</strong><br><a href="https://wa.me/${String(r.Telefono || '').replace(/\D/g, '')}" target="_blank" class="link">${r.Telefono || ''}</a></td>
-      <td>${r.Servicio || ''}</td>
-      <td>${r.Profesional || ''}</td>
-      <td><strong>$${Number(r.Precio || 0).toLocaleString('es-AR')}</strong></td>
-      <td>${comp}</td>
-      <td><span class="badge ${bc}">${estadoMostrar}</span></td>
-      <td><div class="acciones">${acc}</div></td>
-    </tr>`;
-  }).join('');
+    const b = document.getElementById('buscar').value.toLowerCase();
+    const fe = document.getElementById('filtro-estado').value;
+    let fl = reservas.filter(r => {
+        const cb = !b ||
+            String(r.Nombre || '').toLowerCase().includes(b) ||
+            String(r.Telefono || '').includes(b) ||
+            String(r.Servicio || '').toLowerCase().includes(b);
+        const ce = !fe || (r.Estado || 'Pendiente') === fe;
+        return cb && ce;
+    });
+    fl.sort((a, b) => new Date(b.Timestamp) - new Date(a.Timestamp));
+    const tb = document.getElementById('cuerpo-tabla');
+    if (!fl.length) {
+        tb.innerHTML = '<tr><td colspan="8" class="loading">No hay reservas</td></tr>';
+        return;
+    }
+    tb.innerHTML = fl.map(r => {
+        const estadoMostrar = r.Estado || 'Pendiente';
+        const bc = estadoMostrar === 'Confirmada' ? 'badge-confirmada'
+            : estadoMostrar === 'Cancelada' ? 'badge-cancelada'
+            : 'badge-pendiente';
+        const comp = r.Comprobante
+            ? `<a href="${r.Comprobante}" target="_blank" class="link">Ver</a>`
+            : '<span style="color:#9ca3af;">—</span>';
+        const esManual = !String(r.ID || '').startsWith('R');
+        const acc = estadoMostrar !== 'Cancelada' ? `
+            ${estadoMostrar === 'Pendiente' ? `<button class="btn btn-sm btn-success" onclick="marcarConfirmada('${r.ID}')" title="Confirmar">✓</button>` : ''}
+            <button class="btn btn-sm btn-repro" onclick="abrirModalRepro('${r.ID}')" title="Reprogramar">📅</button>
+            <button class="btn btn-sm btn-danger" onclick="cancelarReserva('${r.ID}')" title="Cancelar">✗</button>
+        ` : '';
+        return `<tr style="${esManual ? 'background:#FEF9F3;' : ''}">
+            <td><strong>${formatearFecha(r.Fecha)}</strong><br><span style="color:var(--text-secundario);">${r.Hora || ''}</span></td>
+            <td><strong>${r.Nombre || ''}</strong><br><a href="https://wa.me/${String(r.Telefono || '').replace(/\D/g, '')}" target="_blank" class="link">${r.Telefono || ''}</a></td>
+            <td>${r.Servicio || ''}</td>
+            <td>${r.Profesional || ''}</td>
+            <td><strong>$${Number(r.Precio || 0).toLocaleString('es-AR')}</strong></td>
+            <td>${comp}</td>
+            <td><span class="badge ${bc}">${estadoMostrar}</span></td>
+            <td><div class="acciones">${acc}</div></td>
+        </tr>`;
+    }).join('');
 }
 
 document.getElementById('buscar').addEventListener('input', renderTabla);
 document.getElementById('filtro-estado').addEventListener('change', renderTabla);
 
 async function marcarConfirmada(id){
-  if (!confirm('¿Marcar como confirmada?')) return;
-  await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({ accion: 'marcarConfirmada', id }),
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    redirect: 'follow'
-  });
-  cargarTodo();
+    if (!confirm('¿Marcar como confirmada?')) return;
+    await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ accion: 'marcarConfirmada', id }),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        redirect: 'follow'
+    });
+    cargarTodo();
 }
 
 async function cancelarReserva(id){
-  if (!confirm('¿Cancelar esta reserva? El horario quedará liberado.')) return;
-  await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({ accion: 'eliminarReserva', id }),
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    redirect: 'follow'
-  });
-  cargarTodo();
+    if (!confirm('¿Cancelar esta reserva? El horario quedará liberado.')) return;
+    await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ accion: 'eliminarReserva', id }),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        redirect: 'follow'
+    });
+    cargarTodo();
 }
 
 async function recalcularPestanas(){
-  if (!confirm('¿Recalcular las pestañas por profesional? Esto puede tardar unos segundos.')) return;
-  try {
-    const r = await fetch(API_URL, {
-      method: 'POST',
-      body: JSON.stringify({ accion: 'recalcularPestanas' }),
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      redirect: 'follow'
-    });
-    const data = await r.json();
-    if (data.ok) {
-      alert('✅ Pestañas recalculadas:\n\n' + (data.actualizadas || []).join('\n'));
-      cargarTodo();
-    } else {
-      alert('⚠️ ' + (data.error || 'No se pudieron recalcular'));
+    if (!confirm('¿Recalcular las pestañas por profesional? Esto puede tardar unos segundos.')) return;
+    try {
+        const r = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({ accion: 'recalcularPestanas' }),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            redirect: 'follow'
+        });
+        const data = await r.json();
+        if (data.ok) {
+            alert('✅ Pestañas recalculadas:\n\n' + (data.actualizadas || []).join('\n'));
+            cargarTodo();
+        } else {
+            alert('⚠️ ' + (data.error || 'No se pudieron recalcular'));
+        }
+    } catch (e) {
+        alert('Error: ' + e.message);
     }
-  } catch (e) {
-    alert('Error: ' + e.message);
-  }
 }
 
+/* ============ BLOQUEO ============ */
 function abrirModalBloqueo(){ document.getElementById('modal-bloqueo').classList.add('visible'); }
 function cerrarModalBloqueo(){ document.getElementById('modal-bloqueo').classList.remove('visible'); }
 
 async function bloquearHorario(){
-  const f = document.getElementById('bloqueo-fecha').value;
-  const h = document.getElementById('bloqueo-hora').value;
-  const m = document.getElementById('bloqueo-motivo').value;
-  if (!f || !h) { alert('Completá fecha y hora'); return; }
-  await fetch(API_URL, {
-    method: 'POST',
-    body: JSON.stringify({ accion: 'bloquearHorario', fecha: f, hora: h, motivo: m }),
-    headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-    redirect: 'follow'
-  });
-  cerrarModalBloqueo();
-  document.getElementById('bloqueo-fecha').value = '';
-  document.getElementById('bloqueo-hora').value = '';
-  document.getElementById('bloqueo-motivo').value = '';
-  cargarTodo();
+    const f = document.getElementById('bloqueo-fecha').value;
+    const h = document.getElementById('bloqueo-hora').value;
+    const m = document.getElementById('bloqueo-motivo').value;
+    if (!f || !h) { alert('Completá fecha y hora'); return; }
+    await fetch(API_URL, {
+        method: 'POST',
+        body: JSON.stringify({ accion: 'bloquearHorario', fecha: f, hora: h, motivo: m }),
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        redirect: 'follow'
+    });
+    cerrarModalBloqueo();
+    document.getElementById('bloqueo-fecha').value = '';
+    document.getElementById('bloqueo-hora').value = '';
+    document.getElementById('bloqueo-motivo').value = '';
+    cargarTodo();
+}
+
+/* ============ REPROGRAMAR ============ */
+function abrirModalRepro(id){
+    const r = reservas.find(x => String(x.ID) === String(id));
+    if (!r) { alert('No se encontró la reserva'); return; }
+    reservaReprogramando = id;
+    document.getElementById('repro-info').innerHTML = `
+        <strong>${r.Nombre || ''}</strong> — ${r.Servicio || ''}<br>
+        <span style="color:var(--text-secundario);">Actual: ${formatearFecha(r.Fecha)} ${r.Hora || ''} · ${r.Profesional || ''}</span>
+    `;
+    // Precargar fecha y hora actuales
+    const fechaActual = r.Fecha ? String(r.Fecha).split('T')[0] : '';
+    document.getElementById('repro-fecha').value = fechaActual;
+    document.getElementById('repro-hora').value = r.Hora || '';
+    document.getElementById('modal-repro').classList.add('visible');
+}
+
+function cerrarModalRepro(){
+    document.getElementById('modal-repro').classList.remove('visible');
+    reservaReprogramando = null;
+}
+
+async function guardarReprogramacion(){
+    const f = document.getElementById('repro-fecha').value;
+    const h = document.getElementById('repro-hora').value;
+    if (!f || !h) { alert('Completá la nueva fecha y hora'); return; }
+    if (!reservaReprogramando) { alert('Error: no hay reserva seleccionada'); return; }
+    try {
+        const r = await fetch(API_URL, {
+            method: 'POST',
+            body: JSON.stringify({
+                accion: 'reprogramarReserva',
+                id: reservaReprogramando,
+                fecha: f,
+                hora: h
+            }),
+            headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+            redirect: 'follow'
+        });
+        const data = await r.json();
+        if (!data.ok) {
+            alert('⚠️ ' + (data.error || 'No se pudo reprogramar'));
+            return;
+        }
+        cerrarModalRepro();
+        cargarTodo();
+    } catch (e) {
+        alert('Error: ' + e.message);
+    }
 }
 
 cargarTodo();
