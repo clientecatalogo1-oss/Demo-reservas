@@ -25,7 +25,7 @@
         --cta-texto: #FFFFFF;
         --exito: #16A34A;
         --error: #DC2626;
-        /* Alias de compatibilidad con la estructura existente */
+        /* Alias de compatibilidad */
         --primario: var(--surface-estructural-30);
         --primario-suave: var(--surface-estructural-30-suave);
         --acento: var(--cta-acento-10);
@@ -50,10 +50,25 @@
         background:var(--surface-estructural-30);
         color:#fff;
         padding:.6rem 1rem;
-        display:flex;align-items:center;justify-content:center;gap:10px;
+        display:flex;align-items:center;justify-content:center;gap:14px;
         font-size:.8rem;letter-spacing:1px;text-transform:uppercase;font-weight:600;
     }
-    .top-bar img{height:24px;width:auto;border-radius:4px}
+    /* Chip claro que enmarca el logo para que destaque sobre el azul marino */
+    .logo-chip{
+        background:var(--bg-dominante-60);
+        border-radius:12px;
+        padding:6px 10px;
+        display:inline-flex;align-items:center;justify-content:center;
+        box-shadow:0 4px 14px rgba(0,0,0,.18), inset 0 0 0 1px rgba(11,26,46,.06);
+        transition:transform .2s;
+    }
+    .logo-chip:hover{transform:scale(1.03)}
+    .logo-chip img{
+        height:60px;   /* 2.5× del tamaño anterior (24px → 60px) */
+        width:auto;
+        display:block;
+        border-radius:6px;
+    }
 
     /* Progreso sticky */
     .progreso{
@@ -100,7 +115,7 @@
     .cat-btn:hover{border-color:var(--surface-estructural-30);color:var(--surface-estructural-30)}
     .cat-btn.activo{background:var(--surface-estructural-30);color:#fff;border-color:var(--surface-estructural-30)}
 
-    /* Tarjetas de servicio (30% estructural en bordes/tipografía) */
+    /* Tarjetas de servicio */
     .servicios{display:grid;grid-template-columns:repeat(auto-fill,minmax(320px,1fr));gap:1rem}
     .servicio-card{
         background:var(--blanco);
@@ -201,7 +216,6 @@
         display:inline-flex;align-items:center;justify-content:center;gap:.5rem;
         text-decoration:none;
     }
-    /* 10% CTA */
     .btn-primario{
         background:var(--cta-acento-10);color:var(--cta-texto);
         box-shadow:0 4px 12px rgba(0,166,81,.25);
@@ -299,8 +313,6 @@
     .pasos-mp ol{margin-left:1.2rem;margin-top:.4rem}
     .pasos-mp li{margin-bottom:.3rem}
 
-    .logo-confirmacion{height:40px;width:auto;margin-bottom:1rem}
-
     /* Barra de navegación fija inferior */
     .nav-bar{
         position:fixed;bottom:0;left:0;right:0;
@@ -335,14 +347,20 @@
         .dia .sem{font-size:.55rem}
         .contacto-flotante{bottom:80px;right:16px;gap:8px}
         .btn-flotante{width:48px;height:48px;font-size:1.2rem}
+        /* Logo más compacto en móvil */
+        .logo-chip img{height:44px}
+        .logo-chip{padding:4px 8px}
+        .top-bar span:not(.logo-chip){display:none}
     }
 </style>
 </head>
 <body>
 
-<!-- Barra de marca con logo -->
+<!-- Barra de marca con logo destacado sobre chip claro -->
 <div class="top-bar">
-    <img src="https://i.ibb.co/Tx9m0P7Z/logo.jpg" alt="Vidriera Digital">
+    <span class="logo-chip">
+        <img src="https://i.ibb.co/Tx9m0P7Z/logo.jpg" alt="Vidriera Digital">
+    </span>
     <span>Catálogos online</span>
 </div>
 
@@ -432,7 +450,9 @@
 </div>
 <div class="pantalla" id="pantalla-6">
 <div class="confirmacion">
-<img src="https://i.ibb.co/Tx9m0P7Z/logo.jpg" alt="Vidriera Digital" class="logo-confirmacion">
+<span class="logo-chip" style="margin-bottom:1rem;">
+    <img src="https://i.ibb.co/Tx9m0P7Z/logo.jpg" alt="Vidriera Digital">
+</span>
 <div class="check">✓</div>
 <h1>¡Reserva confirmada!</h1>
 <p class="subtitulo">Tu turno ha sido reservado con éxito. Te contactaremos pronto.</p>
